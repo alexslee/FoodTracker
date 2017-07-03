@@ -37,6 +37,12 @@ class MealTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if UserDefaults.standard.dictionary(forKey: "user") == nil {
+            performSegue(withIdentifier: "SignupSegue", sender: self)
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -127,6 +133,9 @@ class MealTableViewController: UITableViewController {
             
             let selectedMeal = meals[indexPath.row]
             mealDetailViewController.meal = selectedMeal
+            
+        case "SignupSegue":
+            break
             
         default:
             fatalError("Unexpected Segue Identifier; \(segue.identifier)")
