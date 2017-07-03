@@ -53,4 +53,49 @@ class CloudTrackerMiddleman: NSObject {
         task.resume()
     }
     
+    public func login (postData: [String:String], completion: @escaping ([String:[String:String]])->Void) {
+        
+        
+        guard let postJSON = try? JSONSerialization.data(withJSONObject: postData, options: []) else {
+            
+            print("could not serialize json")
+            return
+        }
+        
+        let req = NSMutableURLRequest(url: URL(string:"http://159.203.243.24:8000/login")!)
+        
+        req.httpBody = postJSON
+        req.httpMethod = "POST"
+        req.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = URLSession.shared.dataTask(with: req as URLRequest) { (data, resp, err) in
+            
+            guard let data = data else {
+                
+                print("no data returned from server \(String(describing: err))")
+                return
+            }
+            
+            guard let resp = resp as? HTTPURLResponse else {
+                
+                print("no response returned from server \(String(describing: err))")
+                return
+            }
+            
+            guard let rawJson = try? JSONSerialization.jsonObject(with: data, options: []) else {
+                print("data returned is not json, or not valid")
+                return
+            }
+            
+            guard resp.statusCode != 403 else {
+                
+                print("login failed")
+                return
+            }
+            
+            completion(rawJson as! [String:[String:String]])
+        }
+        
+        task.resume()
+    }
 }
