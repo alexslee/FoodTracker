@@ -16,6 +16,9 @@ class Meal: NSObject, NSCoding {
     var name: String
     var photo: UIImage?
     var rating: Int
+    var calories: Int
+    var mealDescription: String
+    var id:Int
     
     //MARK: Archiving Paths
     
@@ -28,11 +31,14 @@ class Meal: NSObject, NSCoding {
         static let name = "name"
         static let photo = "photo"
         static let rating = "rating"
+        static let calories = "calories"
+        static let mealDescription = "description"
+        static let id = "id"
     }
     
     //MARK: Initialization
     
-    init?(name: String, photo: UIImage?, rating: Int) {
+    init?(name: String, photo: UIImage?, rating: Int,calories:Int, mealDescription:String) {
         // The name must not be empty
         guard !name.isEmpty else {
             return nil
@@ -47,6 +53,9 @@ class Meal: NSObject, NSCoding {
         self.name = name
         self.photo = photo
         self.rating = rating
+        self.calories = calories
+        self.mealDescription = mealDescription
+        self.id = 0
     }
     
     //MARK: NSCoding
@@ -54,6 +63,9 @@ class Meal: NSObject, NSCoding {
         aCoder.encode(name, forKey: PropertyKey.name)
         aCoder.encode(photo, forKey: PropertyKey.photo)
         aCoder.encode(rating, forKey: PropertyKey.rating)
+        aCoder.encode(calories, forKey: PropertyKey.calories)
+        aCoder.encode(mealDescription, forKey: PropertyKey.mealDescription)
+        aCoder.encode(id, forKey: PropertyKey.id)
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -69,8 +81,17 @@ class Meal: NSObject, NSCoding {
         
         let rating = aDecoder.decodeInteger(forKey: PropertyKey.rating)
         
+        let id = aDecoder.decodeInteger(forKey: PropertyKey.id)
+        
+        let calories = aDecoder.decodeInteger(forKey: PropertyKey.calories)
+        
+        guard let mealDescription = aDecoder.decodeObject(forKey: PropertyKey.mealDescription) as? String else {
+            os_log("Unable to decode the meal description for a Meal object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        
         // Must call designated initializer.
-        self.init(name: name, photo: photo, rating: rating)
+        self.init(name: name, photo: photo, rating: rating, calories: calories, mealDescription: mealDescription)
         
     }
 }

@@ -30,7 +30,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         super.prepare(for: segue, sender: sender)
-        
+        var wait = true
         // Configure the destination view controller only when the save button is pressed.
         guard let button = sender as? UIBarButtonItem, button === saveButton else {
             os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
@@ -40,13 +40,32 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let name = nameTextField.text ?? ""
         let photo = photoImageView.image
         let rating = ratingControl.rating
+        let calories = Int(caloriesField.text!) ?? 0
+        let mealDescription = descriptionField.text ?? ""
         
         // Set the meal to be passed to MealTableViewController after the unwind segue.
-        meal = Meal(name: name, photo: photo, rating: rating)
+        meal = Meal(name: name, photo: photo, rating: rating, calories: calories, mealDescription: mealDescription)
+        
+        let cloudTracker = CloudTrackerMiddleman()
+        cloudTracker.postMeal(meal: meal!, completion: {
+            (data) in
+            self.meal!.id = data["meal"]!["id"] as! Int //Int((data["meal"]!["id"])!) ?? 0
+            cloudTracker.postMealImage(meal: self.meal!, completion: {
+                (completion:NSError?) in
+                wait = false
+                return
+            })
+        })
+        while(wait) {
+            continue
+        }
+        
     }
     
     // MARK: properties
     @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var caloriesField: UITextField!
+    @IBOutlet weak var descriptionField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingControl!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -67,6 +86,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             nameTextField.text   = meal.name
             photoImageView.image = meal.photo
             ratingControl.rating = meal.rating
+            caloriesField.text = String(meal.calories)
+            descriptionField.text = meal.mealDescription
         }
         
         // Enable the Save button only if the text field has a valid Meal name.

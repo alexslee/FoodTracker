@@ -25,7 +25,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
         let defaults = UserDefaults.standard.value(forKey: "user")
-        guard let userDict = defaults as? [String:String] else {
+        guard var userDict = defaults as? [String:String] else {
             return
         }
         
@@ -46,7 +46,9 @@ class LoginViewController: UIViewController {
                 print("bad login attempt")
                 return
             }
-            
+            userDict.updateValue(data["user"]!["token"]! as String, forKey: "token")
+            UserDefaults.standard.set(userDict, forKey: "user")
+            UserDefaults.standard.synchronize()
             self.dismiss(animated: true, completion: nil)
         })
     }
