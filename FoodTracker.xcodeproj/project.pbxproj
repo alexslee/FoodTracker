@@ -19,6 +19,7 @@
 		4305F1EE1F088CC60069C838 /* MealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4305F1ED1F088CC60069C838 /* MealTableViewController.swift */; };
 		438658881F0AA704008682D8 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438658871F0AA704008682D8 /* SignUpViewController.swift */; };
 		4386588A1F0AAC76008682D8 /* CloudTrackerMiddleman.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438658891F0AAC76008682D8 /* CloudTrackerMiddleman.swift */; };
+		4386588F1F0ABAF2008682D8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386588E1F0ABAF2008682D8 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		4305F1ED1F088CC60069C838 /* MealTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewController.swift; sourceTree = "<group>"; };
 		438658871F0AA704008682D8 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		438658891F0AAC76008682D8 /* CloudTrackerMiddleman.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudTrackerMiddleman.swift; sourceTree = "<group>"; };
+		4386588E1F0ABAF2008682D8 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 			children = (
 				4305F1C91F085B8B0069C838 /* MealViewController.swift */,
 				4305F1ED1F088CC60069C838 /* MealTableViewController.swift */,
+				4386588E1F0ABAF2008682D8 /* LoginViewController.swift */,
 				438658871F0AA704008682D8 /* SignUpViewController.swift */,
 			);
 			name = "View Controllers";
@@ -241,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4386588F1F0ABAF2008682D8 /* LoginViewController.swift in Sources */,
 				4305F1EA1F0885DC0069C838 /* Meal.swift in Sources */,
 				438658881F0AA704008682D8 /* SignUpViewController.swift in Sources */,
 				4305F1CA1F085B8B0069C838 /* MealViewController.swift in Sources */,

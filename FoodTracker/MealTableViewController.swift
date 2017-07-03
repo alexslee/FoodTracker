@@ -13,7 +13,7 @@ class MealTableViewController: UITableViewController {
 
     //MARK: properties
     var meals = [Meal]()
-    
+    var isLoggedIn = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,6 +41,9 @@ class MealTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         if UserDefaults.standard.dictionary(forKey: "user") == nil {
             performSegue(withIdentifier: "SignupSegue", sender: self)
+        } else if (!isLoggedIn){
+            isLoggedIn = true
+            performSegue(withIdentifier: "loginSegue", sender: self)
         }
     }
 
@@ -135,6 +138,9 @@ class MealTableViewController: UITableViewController {
             mealDetailViewController.meal = selectedMeal
             
         case "SignupSegue":
+            break
+        
+        case "loginSegue":
             break
             
         default:
